@@ -1,0 +1,44 @@
+Trigger
+
+create trigger trg_atual_estoque
+on estoque_has_compra
+for insert
+AS Begin
+	Declare @estoque_idest			int,
+			@compra_idcom			int,
+			
+			
+	select @estoque_idest = idest, @compra_idcom = idcompra from inserted
+
+	update Estoque
+
+		set qtdest = qtdest - @estoque_idest,
+			idcompra = @compra_idcom
+		where 
+			idcompra = @compra_idcom;
+			
+	insert into estoque_has_compra (estoque_idest,compra_idcom)
+		values(@estoque_idest,@compra_idcom);
+	
+end
+
+
+Delimiter $
+create procedure populando()
+Begin
+	declare x int;
+	set x = (select count(cd_curso) from tb_curso_teste);
+	while x <=100 do
+	insert into tb_curso_teste values (x, concat('cursoteste',",x),
+	concat ('turnoteste',",x));
+	set x = x + 1;
+	end while;
+end
+$	
+
+call populando();
+	
+	
+	
+magnet:?xt=urn:btih:ad3ee2f525fa63057fe91c2ea4ede689f16f2f3c&dn=Certifica%c3%a7%c3%a3o%20AZ-300%20Microsoft%20Azure%20Architect%20Design%20-%202020&tr=udp%3a%2f%2ftracker.openbittorrent.com%3a1337%2fannounce&tr=udp%3a%2f%2ftracker.opentrackr.org%3a1337%2fannounce
+Curso Azure	

@@ -1,0 +1,203 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+int i, j, num;                                                //Declaração de variaveis
+int matriz[99][99], matriz1[99][99], a, b, c;
+int maior = 0, menor = 0, numrepete, primos;
+float media = 0;
+
+void ParouImpar(){                                  //Procedimento que verifica quem é par e quem é ímpar
+
+    int c1 = 0, c2 = 0;
+   
+    for(i = 0; i<num; i++)
+      for(j = 0; j<num; j++){
+        if (matriz[i][j]%2 == 0)                    // Laços que percorrem a matriz e determinam que é par e quem é ímpar
+          c1++;
+        else
+          c2++;
+      }
+    if(c1 == 1)                                        // Exinindo a quantidade de numero pares e ímpares
+      printf("\nTemos um numero par\n");
+    else
+      printf("\nTemos %d numeros pares\n", c1);
+    if(c2 == 1)
+      printf("Temos um numero impar\n");
+    else
+      printf("Temos %d numeros impares\n", c2);
+}   
+//------------------------------------------------------------------------------------------------------------- 
+int MaiorNumero(){                              //Função que verifica quem é o maior numero da matriz
+   
+    maior = matriz[0][0];
+    for(i = 0; i<num; i++)
+      for(j = 0; j<num; j++){                        // Laços que determinam o maior numero
+          if (maior < matriz[i][j])
+            maior = matriz[i][j];
+      }
+      return maior;
+}
+//-------------------------------------------------------------------------------------------------------------       
+int MenorNumero(){                            //Função que verifica quem é o menor numero da matriz
+   
+    menor = matriz[0][0];
+    for(i = 0; i<num; i++)
+      for(j = 0; j<num; j++){                // Laços que determinam o menor numero
+          if (menor > matriz[i][j])
+            menor = matriz[i][j];
+      }
+      return menor;
+    }
+//------------------------------------------------------------------------------------------------------------- 
+int NumeroRepete(){                            //Função que verifica quem mais se repete
+   
+    for(i = 0; i<99; i++)                              // Inicializando a matriz1
+      for(j = 0; j<99; j++)
+        matriz1[i][j] = 0;
+   
+    for(i = 0; i<num; i++)
+      for(j = 0; j<num; j++)                          //Laços que percorrem a matriz procurando elementos iguais
+        for(int k = 0; k<num; k++)
+          for(int l = 0; l<num; l++){
+                  if(matriz[i][j] == matriz[k][l])
+                  matriz1[i][j]++;
+          }
+   
+      a = matriz1[0][0];
+      numrepete = 0;
+   
+      for(i = 0; i<num; i++)
+      for(j = 0; j<num; j++){                                //Laços para determninar o elemento que mais se repete e sua posição
+        if (a < matriz1[i][j]){
+            a = matriz1[i][j];
+            b = i;
+            c = j;
+        }
+        else if(matriz1[i][j] == 1)
+          numrepete++;
+      }
+     
+      return numrepete; 
+} 
+//-------------------------------------------------------------------------------------------------------------   
+float Media(){                                        //Função que calcula a media dos numeros
+    float total = 0;
+   
+    for(i = 0; i<num; i++)
+      for(j = 0; j<num; j++){
+          total = total + matriz[i][j];            // A soma dos numeros é acumulada na variavel total
+      }
+     
+    media = total/(num*num);
+    return media;
+}
+//-------------------------------------------------------------------------------------------------------------     
+int NumerosPrimos(){                              //Função que calcula quantos primos há na matriz
+                                   
+    int aux, div;
+   
+    primos = 0;
+   
+    for(i = 0; i<num; i++){
+      for(j = 0; j<num; j++){
+          aux = 2;
+          div = 0;
+          while(aux<=(matriz[i][j]/2)){
+              if((matriz[i][j]%aux == 0)){
+                div = div +1;
+              }
+              aux = aux + 1;
+          }
+          if(div == 0)
+              primos++;     
+      }
+    }
+    return primos;
+} 
+//-------------------------------------------------------------------------------------------------------------
+int main() {                                                // Função Principal
+   
+    int opcao;
+   
+    srand(time(NULL));
+   
+    printf("\n-----------------------------------------------\n");
+    printf("Bem-vindo ao programa estatistico de matrizes\n");
+    printf("-----------------------------------------------\n");
+    printf("\nDigite a dimensao da matriz desejada:\n");                // Lendo o tamanho da matriz
+    scanf("%d", &num);
+    while(num<0){
+      printf("Numero invalido. Digite novamente: \n");                  // Validando a entrada
+      scanf("%d", &num);
+    }
+   
+    for(i = 0; i<99; i++)                                              // Inicializando a matriz
+      for(j = 0; j<99; j++)
+        matriz[i][j] = 0;
+       
+    for(i = 0; i<num; i++)                                        // Preenchendo a matriz com numeros aleatorios
+      for(j = 0; j<num; j++)
+        matriz[i][j] = rand()%99 + 1;
+       
+    opcao = 1;
+   
+    while(opcao != 0){
+     
+    printf("\nA matriz gerada e :\n");         
+       
+    for(i = 0; i<num; i++){                                            //Exibindo a matriz gerada
+      printf("\n");
+      for(j = 0; j<num; j++)
+        printf(" %2.0d", matriz[i][j]); 
+    }       
+     
+      printf("\n\n-------Menu-------\n");                                // Menu com as opções do programa
+      printf("\n1- Par ou impar\n");
+      printf("2- Maior numero\n");
+      printf("3- Menor numero\n");
+      printf("4- Numero que mais se repete\n");
+      printf("5- Media\n");
+      printf("6- Numeros primos\n");
+      printf("0- Sair\n");
+      printf("\nOpcao: ");
+      scanf("%d", &opcao);
+   
+  A: switch(opcao){
+                  case 1:                                            //Procedimento para calcular o numero de pares e ímpares
+                      ParouImpar();
+                      break;
+                  case 2:
+                      MaiorNumero();                        // Chamando função que calcula o maior numero
+                      printf("\nO maior numero e %d\n",maior);
+                      break;
+                  case 3:
+                      MenorNumero();                        // Chamando função que calcula o menor numero
+                      printf("\nO menor numero e %d\n",menor);
+                      break;
+                  case 4:
+                      NumeroRepete();                      // Chamando função que calcula o numero que mais se repete
+                      if(numrepete == num*num)                // Condição para o caso de não haver elemento que mais se repita
+                        printf("\nNao ha elemento que mais se repete\n");
+                      else                                  // Condição para o caso de haver elemento que mais se repita
+                        printf("\nO elemento %d se repetiu %d vezes\n", matriz[b][c], matriz1[b][c]);
+                      break;
+                  case 5:
+                      Media();                              // Chamando função que calcula a media dos numeros
+                      printf("\nA media e %.3f\n", media);
+                      break;
+                  case 6:
+                      NumerosPrimos();                      // Chamando função que calcula o numero de primos na matriz
+                      printf("\nO numero de primos e %d\n", primos);
+                      break;
+                  case 0:                                    // Digito de saida do programa
+                      return 0;
+                  default:
+                      printf("Numero invalido. Digite novamente\n");    // Validando a entrada do usuario
+                      scanf("%d", &opcao);
+                      goto A;
+                      break;
+                  }                 
+    } 
+    return 0;
+}
