@@ -1,0 +1,6 @@
+br/com/msoft/mapapsI/Sintomas.java
+ br.com.msoft.mapapsI.Sintomas
+br/com/msoft/mapapsI/Main.java
+ br.com.msoft.mapapsI.Main
+br/com/msoft/mapapsI/Paciente.java
+ br.com.msoft.mapapsI.Paciente

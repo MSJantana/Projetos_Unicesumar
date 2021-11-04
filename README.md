@@ -2,4 +2,5 @@
 
 - Arquivos em C
 - Arquivos em SQL
+- Exercício Java (Digital Innovation One)
 
